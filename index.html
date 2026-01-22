@@ -10,10 +10,12 @@ body{
   min-height:100vh;
   background: radial-gradient(circle at top,#3a1c5a,#120018);
   font-family:'Arial',sans-serif;
-  overflow-x:hidden;
   color:#fff;
+  overflow:hidden;
   position:relative;
 }
+
+/* Звезды */
 .stars{
   position:absolute;
   width:100%;
@@ -34,7 +36,7 @@ body{
   50%{opacity:1;}
 }
 
-/* Главный экран */
+/* Контейнер */
 .container{
   position:relative;
   z-index:4;
@@ -47,27 +49,26 @@ body{
   padding:20px;
 }
 
+/* Сердце */
 .heart{
-  width:100px;
-  height:100px;
+  width:120px;
+  height:120px;
   background:#b14cff;
   position:relative;
   transform:rotate(-45deg);
   animation:beat 1.5s infinite;
   margin-bottom:20px;
-  z-index:4;
 }
-
 .heart::before,.heart::after{
   content:'';
-  width:100px;
-  height:100px;
+  width:120px;
+  height:120px;
   background:#b14cff;
   border-radius:50%;
   position:absolute;
 }
-.heart::before{top:-50px;left:0;}
-.heart::after{left:50px;top:0;}
+.heart::before{top:-60px;left:0;}
+.heart::after{left:60px;top:0;}
 @keyframes beat{
   0%,100%{transform:rotate(-45deg) scale(1);}
   50%{transform:rotate(-45deg) scale(1.1);}
@@ -87,35 +88,6 @@ p{font-size:1em;max-width:90%;margin-bottom:20px;line-height:1.6;}
   cursor:pointer;
   box-shadow:0 0 15px rgba(177,76,255,0.6);
 }
-
-/* Котята на главном экране */
-.kittens{
-  position:relative;
-  width:100%;
-  height:180px;
-  margin-top:20px;
-}
-.kitten{
-  position:absolute;
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  z-index:5;
-}
-.kitten.blue{background:#7ec8ff; left:20%; top:10px; animation:blueKittenMove 6s infinite alternate ease-in-out;}
-.kitten.purple{background:#b14cff; left:60%; top:10px; animation:purpleKittenMove 8s infinite alternate ease-in-out;}
-
-@keyframes blueKittenMove{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-15px);}
-  100%{transform:translateY(0);}
-}
-@keyframes purpleKittenMove{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-12px);}
-  100%{transform:translateY(0);}
-}
-
 </style>
 </head>
 <body>
@@ -126,12 +98,6 @@ p{font-size:1em;max-width:90%;margin-bottom:20px;line-height:1.6;}
   <h1>С днём рождения, Малышка 💜</h1>
   <p>Сегодня твой день особенный! Пусть он будет наполнен радостью и любовью.</p>
   <button class="love-btn" onclick="window.location.href='str1.html'">Нажми сюда 💜</button>
-
-  <!-- Котята на главном экране -->
-  <div class="kittens">
-    <div class="kitten blue"></div>
-    <div class="kitten purple"></div>
-  </div>
 </div>
 
 <script>

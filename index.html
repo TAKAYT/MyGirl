@@ -8,10 +8,10 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      height: 100vh;
+      min-height: 100vh;
       background: radial-gradient(circle at top, #3a1c5a, #120018);
       font-family: 'Arial', sans-serif;
-      overflow: hidden;
+      overflow-x: hidden;
       color: #fff;
     }
 
@@ -19,7 +19,6 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background: transparent;
       overflow: hidden;
     }
 
@@ -40,7 +39,7 @@
     .container {
       position: relative;
       z-index: 4;
-      height: 100%;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -50,34 +49,33 @@
     }
 
     .heart {
-      width: 120px;
-      height: 120px;
+      width: 100px;
+      height: 100px;
       background: #b14cff;
       position: relative;
       transform: rotate(-45deg);
       animation: beat 1.5s infinite;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       z-index: 4;
-      will-change: transform;
     }
 
     .heart::before,
     .heart::after {
       content: '';
-      width: 120px;
-      height: 120px;
+      width: 100px;
+      height: 100px;
       background: #b14cff;
       border-radius: 50%;
       position: absolute;
     }
 
     .heart::before {
-      top: -60px;
+      top: -50px;
       left: 0;
     }
 
     .heart::after {
-      left: 60px;
+      left: 50px;
       top: 0;
     }
 
@@ -87,27 +85,28 @@
     }
 
     h1 {
-      font-size: 2.2em;
-      margin-bottom: 15px;
+      font-size: 2em;
+      margin-bottom: 12px;
     }
 
     p {
-      font-size: 1.1em;
-      max-width: 500px;
-      margin-bottom: 25px;
+      font-size: 1em;
+      max-width: 90%;
+      margin-bottom: 20px;
       line-height: 1.6;
     }
 
     .timer {
-      font-size: 1.2em;
+      font-size: 1.1em;
       background: rgba(255,255,255,0.1);
-      padding: 12px 20px;
+      padding: 10px 18px;
       border-radius: 15px;
       backdrop-filter: blur(5px);
+      margin-bottom: 15px;
     }
 
     .love-btn {
-      margin-top: 25px;
+      margin-top: 15px;
       padding: 12px 25px;
       font-size: 1em;
       border: none;
@@ -123,50 +122,38 @@
       position: fixed;
       inset: 0;
       z-index: 3;
-      overflow: hidden;
-    }
-
-    .love-bg {
-      position: absolute;
-      inset: 0;
+      overflow-y: auto;
       background: radial-gradient(circle at top, #3a1c5a, #120018);
-      animation: bgFade 1.2s ease forwards;
+      padding: 20px 0;
     }
 
     .love-content {
-      position: relative;
-      z-index: 4;
-      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 20px;
       opacity: 0;
       animation: contentFade 1.5s ease forwards;
-      animation-delay: 1.2s;
+      animation-delay: 0.5s;
     }
 
     .photo-layer {
-      position: relative;
-      width: 85vw;
-      max-width: 340px;
-      height: 55vh;
-      max-height: 460px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
       margin-bottom: 20px;
     }
 
     .photo {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      width: 140px;
+      height: 140px;
       object-fit: cover;
-      border-radius: 30px;
-      box-shadow: 0 0 40px rgba(177,76,255,0.6);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(177,76,255,0.5);
       opacity: 0;
       transform: scale(1.05);
-      transition: opacity 1.2s ease, transform 6s ease;
+      transition: opacity 1s ease, transform 6s ease;
     }
 
     .photo.active {
@@ -174,9 +161,19 @@
       transform: scale(1);
     }
 
-    @keyframes bgFade {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .love-text {
+      margin-top: 10px;
+      font-size: 1.2em;
+      line-height: 1.5em;
+      color: #e6c8ff;
+      text-align: center;
+      max-width: 90%;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes contentFade {
@@ -184,33 +181,10 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    .love img {
-      width: 80vw;
-      max-width: 320px;
-      height: 45vh;
-      max-height: 420px;
-      object-fit: cover;
-      border-radius: 25px;
-      margin: 10px 0;
-      box-shadow: 0 0 30px rgba(177,76,255,0.6);
-    }
-
-    .love img {
-      width: 140px;
-      border-radius: 15px;
-      margin: 8px;
-      box-shadow: 0 0 20px rgba(177,76,255,0.5);
-    }
-
-    .love-text {
-      margin-top: 15px;
-      font-size: 1.2em;
-      color: #e6c8ff;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    @media (max-width: 400px) {
+      h1 { font-size: 1.5em; }
+      p, .love-text { font-size: 1em; }
+      .photo { width: 120px; height: 120px; }
     }
   </style>
 </head>
@@ -221,21 +195,25 @@
     <div class="heart"></div>
     <h1>С днём рождения, Малышка 💜</h1>
     <p>
-      Сегодня тебе 18, и этот день — особенный.
-      Пусть твои мечты сбываются так же красиво,
-      как светят звёзды этой ночью.
+      Сегодня тебе 18, и этот день — особенный.<br>
+      Пусть твои мечты сбываются так же красиво,<br>
+      как светят звёзды этой ночью.<br>
       Я рядом и всегда буду.
     </p>
     <div class="timer" id="timer"></div>
     <button class="love-btn" onclick="showLove()">Нажми сюда 💜</button>
+
     <div class="love" id="love">
-      <div class="love-bg"></div>
       <div class="love-content">
         <div class="photo-layer">
           <img src="hiro02_1.jpg" alt="02 и Хиро" class="photo active" />
           <img src="hiro02_2.jpg" alt="02 и Хиро" class="photo" />
         </div>
-        <p class="love-text">Я тебя люблю, Малышка 💜<br>У тебя всё получится.</p>
+        <p class="love-text">
+          Я тебя люблю, Малышка 💜<br>
+          Пусть каждый твой день будет наполнен улыбками и волшебством.<br>
+          Я рядом, и вместе мы сделаем этот мир ярче 🌟
+        </p>
       </div>
     </div>
   </div>
@@ -275,6 +253,7 @@
     updateTimer();
     setInterval(updateTimer, 60000);
 
+    // показать любовь и анимацию фото
     function showLove() {
       const love = document.getElementById('love');
       love.style.display = 'block';
@@ -284,9 +263,9 @@
       const photos = document.querySelectorAll('.photo');
       let index = 0;
       setInterval(() => {
-        photos[index].classList.remove('active');
-        index = (index + 1) % photos.length;
+        photos.forEach(p => p.classList.remove('active'));
         photos[index].classList.add('active');
+        index = (index + 1) % photos.length;
       }, 5000);
     }
   </script>

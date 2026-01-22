@@ -1,262 +1,331 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>С днём рождения, Малышка</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>С днём рождения, Малышка</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-      min-height: 100vh;
-      background: radial-gradient(circle at top, #3a1c5a, #120018);
-      font-family: 'Arial', sans-serif;
-      overflow-x: hidden;
-      color: #fff;
-    }
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #3a1c5a, #120018);
+  font-family: 'Arial', sans-serif;
+  overflow-x: hidden;
+  color: #fff;
+}
 
-    .stars, .stars-love {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      pointer-events: none;
-    }
+.stars, .stars-love {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
 
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      opacity: 0.5;
-      animation: twinkle 3s infinite ease-in-out;
-    }
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  opacity: 0.5;
+  animation: twinkle 3s infinite ease-in-out;
+}
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 1; }
-    }
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
 
-    .container {
-      position: relative;
-      z-index: 4;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-    }
+.container {
+  position: relative;
+  z-index: 4;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
 
-    .heart {
-      width: 100px;
-      height: 100px;
-      background: #b14cff;
-      position: relative;
-      transform: rotate(-45deg);
-      animation: beat 1.5s infinite;
-      margin-bottom: 20px;
-      z-index: 4;
-    }
+.heart {
+  width: 100px;
+  height: 100px;
+  background: #b14cff;
+  position: relative;
+  transform: rotate(-45deg);
+  animation: beat 1.5s infinite;
+  margin-bottom: 20px;
+  z-index: 4;
+}
 
-    .heart::before,
-    .heart::after {
-      content: '';
-      width: 100px;
-      height: 100px;
-      background: #b14cff;
-      border-radius: 50%;
-      position: absolute;
-    }
+.heart::before,
+.heart::after {
+  content: '';
+  width: 100px;
+  height: 100px;
+  background: #b14cff;
+  border-radius: 50%;
+  position: absolute;
+}
 
-    .heart::before { top: -50px; left: 0; }
-    .heart::after { left: 50px; top: 0; }
+.heart::before { top: -50px; left: 0; }
+.heart::after { left: 50px; top: 0; }
 
-    @keyframes beat {
-      0%, 100% { transform: rotate(-45deg) scale(1); }
-      50% { transform: rotate(-45deg) scale(1.1); }
-    }
+@keyframes beat {
+  0%,100%{transform:rotate(-45deg) scale(1);}
+  50%{transform:rotate(-45deg) scale(1.1);}
+}
 
-    h1 { font-size: 2em; margin-bottom: 12px; }
-    p { font-size: 1em; max-width: 90%; margin-bottom: 20px; line-height: 1.6; }
+h1 { font-size: 2em; margin-bottom: 12px; }
+p { font-size: 1em; max-width: 90%; margin-bottom: 20px; line-height: 1.6; }
 
-    .timer {
-      font-size: 1.1em;
-      background: rgba(255,255,255,0.1);
-      padding: 10px 18px;
-      border-radius: 15px;
-      backdrop-filter: blur(5px);
-      margin-bottom: 15px;
-    }
+.timer {
+  font-size: 1.1em;
+  background: rgba(255,255,255,0.1);
+  padding: 10px 18px;
+  border-radius: 15px;
+  backdrop-filter: blur(5px);
+  margin-bottom: 15px;
+}
 
-    .love-btn {
-      margin-top: 15px;
-      padding: 12px 25px;
-      font-size: 1em;
-      border: none;
-      border-radius: 25px;
-      background: linear-gradient(135deg, #b14cff, #7a2cff);
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(177,76,255,0.6);
-    }
+.love-btn {
+  margin-top: 15px;
+  padding: 12px 25px;
+  font-size: 1em;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #b14cff, #7a2cff);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(177,76,255,0.6);
+}
 
-    .love {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 3;
-      overflow-y: auto;
-      background: radial-gradient(circle at top, #3a1c5a, #120018);
-      padding: 20px 0;
-    }
+/* LOVE SCREEN */
+.love {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  overflow-y: auto;
+  background: radial-gradient(circle at top, #3a1c5a, #120018);
+  padding: 20px 0;
+}
 
-    .love-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      opacity: 0;
-      animation: contentFade 1.5s ease forwards;
-      animation-delay: 0.5s;
-    }
+.close-love {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 2em;
+  color: #fff;
+  cursor: pointer;
+  z-index: 6;
+}
 
-    .photo-layer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
-      width: 90%;
-      max-width: 350px;
-    }
+.love-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  opacity: 0;
+  animation: contentFade 1.5s ease forwards;
+  animation-delay: 0.5s;
+}
 
-    .photo {
-      width: 100%;
-      height: 220px; /* длинные фото */
-      object-fit: cover;
-      border-radius: 20px;
-      box-shadow: 0 0 25px rgba(177,76,255,0.5);
-      opacity: 0;
-      transform: scale(1.05);
-      transition: opacity 1s ease, transform 6s ease;
-    }
+.photo-layer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  width: 90%;
+  max-width: 350px;
+}
 
-    .photo.active { opacity: 1; transform: scale(1); }
+.photo {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(177,76,255,0.5);
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 1s ease, transform 6s ease;
+}
 
-    .love-text {
-      margin-top: 15px;
-      font-size: 1.2em;
-      line-height: 1.5em;
-      color: #e6c8ff;
-      text-align: center;
-      max-width: 90%;
-      animation: fadeIn 2s ease forwards;
-    }
+.photo.active { opacity: 1; transform: scale(1); }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+.love-text {
+  margin-top: 15px;
+  font-size: 1.2em;
+  line-height: 1.5em;
+  color: #e6c8ff;
+  text-align: center;
+  max-width: 90%;
+  animation: fadeIn 2s ease forwards;
+}
 
-    @keyframes contentFade {
-      from { opacity: 0; transform: scale(0.96); }
-      to { opacity: 1; transform: scale(1); }
-    }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-    @media (max-width: 400px) {
-      h1 { font-size: 1.5em; }
-      p, .love-text { font-size: 1em; }
-      .photo { height: 180px; }
-    }
-  </style>
+@keyframes contentFade {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* KITTENS */
+.kittens {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  margin-top: 10px;
+  overflow: visible;
+}
+
+.kitten {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  z-index: 5;
+}
+
+.kitten.blue { left: 10%; }
+.kitten.purple { right: 10%; }
+
+/* Blue kitten movements */
+@keyframes blueKittenMove {
+  0% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-15px) rotate(-10deg); }
+  50% { transform: translateY(5px) rotate(10deg); }
+  75% { transform: translateY(-10px) rotate(-5deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* Purple kitten movements */
+@keyframes purpleKittenMove {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  20% { transform: translateY(-10px) rotate(15deg) scale(1.05); }
+  40% { transform: translateY(10px) rotate(-10deg) scale(0.95); }
+  60% { transform: translateY(-5px) rotate(5deg) scale(1.1); }
+  80% { transform: translateY(5px) rotate(-5deg) scale(0.9); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+/* Mobile adjustments */
+@media (max-width:400px){
+  h1{font-size:1.5em;}
+  p, .love-text{font-size:1em;}
+  .photo{height:180px;}
+  .kitten{width:40px;height:40px;}
+}
+</style>
 </head>
 <body>
-  <div class="stars" id="stars"></div>
+<div class="stars" id="stars"></div>
 
-  <div class="container">
-    <div class="heart"></div>
-    <h1>С днём рождения, Малышка 💜</h1>
-    <p>
-      Сегодня тебе 18, и этот день — особенный.<br>
-      Пусть твои мечты сбываются так же красиво,<br>
-      как светят звёзды этой ночью.<br>
-      Я рядом и всегда буду.
-    </p>
-    <div class="timer" id="timer"></div>
-    <button class="love-btn" onclick="showLove()">Нажми сюда 💜</button>
+<div class="container">
+  <div class="heart" id="mainHeart"></div>
+  <h1>С днём рождения, Малышка 💜</h1>
+  <p>
+    Сегодня тебе 18, и этот день — особенный.<br>
+    Пусть твои мечты сбываются так же красиво,<br>
+    как светят звёзды этой ночью.<br>
+    Я рядом и всегда буду.
+  </p>
+  <div class="timer" id="timer"></div>
+  <button class="love-btn" onclick="showLove()">Нажми сюда 💜</button>
 
-    <div class="love" id="love">
-      <div class="stars-love" id="starsLove"></div>
-      <div class="love-content">
-        <div class="photo-layer">
-          <img src="hiro02_1.jpg" alt="02 и Хиро" class="photo active" />
-          <img src="hiro02_2.jpg" alt="02 и Хиро" class="photo" />
-        </div>
-        <p class="love-text">
-          Я тебя люблю, Малышка 💜<br>
-          Пусть каждый твой день будет наполнен улыбками и волшебством.<br>
-          Я рядом, и вместе мы сделаем этот мир ярче 🌟
-        </p>
+  <div class="love" id="love">
+    <div class="stars-love" id="starsLove"></div>
+    <div class="close-love" onclick="closeLove()">×</div>
+    <div class="love-content">
+      <div class="photo-layer">
+        <img src="hiro02_1.jpg" alt="02 и Хиро" class="photo active" />
+        <img src="hiro02_2.jpg" alt="02 и Хиро" class="photo" />
+      </div>
+      <p class="love-text">
+        Я тебя люблю, Малышка 💜<br>
+        Пусть каждый твой день будет наполнен улыбками и волшебством.<br>
+        Я рядом, и вместе мы сделаем этот мир ярче 🌟
+      </p>
+      <div class="kittens">
+        <img src="blue_kitten.png" alt="Голубой котёнок" class="kitten blue" />
+        <img src="purple_kitten.png" alt="Фиолетовый котёнок" class="kitten purple" />
       </div>
     </div>
   </div>
+</div>
 
-  <script>
-    // звезды на главном фоне
-    const stars = document.getElementById('stars');
-    for (let i = 0; i < 120; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.animationDelay = Math.random() * 3 + 's';
-      stars.appendChild(star);
-    }
+<script>
+// Звезды
+const stars = document.getElementById('stars');
+for(let i=0;i<120;i++){
+  const s=document.createElement('div');s.className='star';
+  s.style.top=Math.random()*100+'%';
+  s.style.left=Math.random()*100+'%';
+  s.style.animationDelay=Math.random()*3+'s';
+  stars.appendChild(s);
+}
 
-    // звезды на love фоне
-    const starsLove = document.getElementById('starsLove');
-    for (let i = 0; i < 80; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.opacity = 0.3 + Math.random() * 0.4;
-      star.style.animationDuration = 2 + Math.random() * 2 + 's';
-      starsLove.appendChild(star);
-    }
+// Звезды на love
+const starsLove=document.getElementById('starsLove');
+for(let i=0;i<80;i++){
+  const s=document.createElement('div');s.className='star';
+  s.style.top=Math.random()*100+'%';
+  s.style.left=Math.random()*100+'%';
+  s.style.opacity=0.3+Math.random()*0.4;
+  s.style.animationDuration=2+Math.random()*2+'s';
+  starsLove.appendChild(s);
+}
 
-    // таймер до дня рождения (22 января)
-    const timer = document.getElementById('timer');
-    const birthday = new Date(new Date().getFullYear(), 0, 22);
-    function updateTimer() {
-      const now = new Date();
-      let diff = birthday - now;
-      if (diff < 0) { timer.innerHTML = 'С днём рождения, Малышка 🎉'; return; }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      timer.innerHTML = `До твоего дня осталось: <br>${days} дн. ${hours} ч. ${minutes} мин.`;
-    }
-    updateTimer();
-    setInterval(updateTimer, 60000);
+// Таймер
+const timer=document.getElementById('timer');
+const birthday=new Date(new Date().getFullYear(),0,22);
+function updateTimer(){
+  const now=new Date();
+  let diff=birthday-now;
+  if(diff<0){timer.innerHTML='С днём рождения, Малышка 🎉'; return;}
+  const days=Math.floor(diff/(1000*60*60*24));
+  const hours=Math.floor((diff/(1000*60*60))%24);
+  const minutes=Math.floor((diff/(1000*60))%60);
+  timer.innerHTML=`До твоего дня осталось: <br>${days} дн. ${hours} ч. ${minutes} мин.`;
+}
+updateTimer();
+setInterval(updateTimer,60000);
 
-    // показать любовь и смена фото
-    function showLove() {
-      const love = document.getElementById('love');
-      love.style.display = 'block';
-      document.body.style.overflow = 'hidden';
-      document.querySelector('.heart').style.opacity = '0';
-      const photos = document.querySelectorAll('.photo');
-      let index = 0;
-      setInterval(() => {
-        photos.forEach(p => p.classList.remove('active'));
-        photos[index].classList.add('active');
-        index = (index + 1) % photos.length;
-      }, 5000);
-    }
-  </script>
+// Главная кнопка
+function showLove(){
+  const love=document.getElementById('love');
+  love.style.display='block';
+  document.body.style.overflow='hidden';
+  document.getElementById('mainHeart').style.opacity='0';
+  const photos=document.querySelectorAll('.photo');
+  let index=0;
+  setInterval(()=>{
+    photos.forEach(p=>p.classList.remove('active'));
+    photos[index].classList.add('active');
+    index=(index+1)%photos.length;
+  },5000);
+
+  // Котята анимация
+  const blue=document.querySelector('.kitten.blue');
+  const purple=document.querySelector('.kitten.purple');
+  blue.style.animation='blueKittenMove 6s infinite alternate ease-in-out';
+  purple.style.animation='purpleKittenMove 8s infinite alternate ease-in-out';
+}
+
+// Крестик закрытия love
+function closeLove(){
+  document.getElementById('love').style.display='none';
+  document.body.style.overflow='auto';
+  document.getElementById('mainHeart').style.opacity='1';
+}
+
+</script>
 </body>
 </html>

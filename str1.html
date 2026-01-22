@@ -11,11 +11,11 @@ body{
   background: radial-gradient(circle at top,#3a1c5a,#120018);
   font-family:'Arial',sans-serif;
   color:#fff;
-  overflow-x:hidden;
+  overflow:hidden;
   position:relative;
 }
 
-/* Звезды */
+/* Звёзды на фоне */
 .stars-love{
   position:absolute;
   width:100%;
@@ -36,11 +36,28 @@ body{
   50%{opacity:1;}
 }
 
+/* Кометы */
+.comet{
+  position:absolute;
+  width:2px;
+  height:50px;
+  background: linear-gradient(white, rgba(255,255,255,0));
+  opacity:0.6;
+  border-radius:50%;
+  animation-name:fall;
+  animation-timing-function:linear;
+  animation-iteration-count:infinite;
+}
+@keyframes fall{
+  0%{transform:translateY(-60px) rotate(10deg);}
+  100%{transform:translateY(110vh) rotate(10deg);}
+}
+
 /* Контент */
 .love-content{
   display:flex;
   flex-direction:column;
-  justify-content:flex-start;
+  justify-content:center;
   align-items:center;
   min-height:100vh;
   padding:20px;
@@ -60,17 +77,18 @@ body{
 
 /* Фото */
 .photo-layer{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:15px;
+  position:relative;
   width:90%;
-  max-width:350px;
-  margin-top:10px;
+  max-width:320px;
+  height:400px;
+  margin-top:20px;
 }
 .photo{
+  position:absolute;
+  top:0;
+  left:0;
   width:100%;
-  height:280px;
+  height:100%;
   object-fit:cover;
   border-radius:20px;
   box-shadow:0 0 25px rgba(177,76,255,0.5);
@@ -85,40 +103,20 @@ body{
   font-size:1.2em;
   line-height:1.5em;
   color:#e6c8ff;
+  max-width:90%;
 }
 
-/* Котята */
-.kittens{
-  position:relative;
-  width:100%;
-  height:80px;
-  margin-top:20px;
-}
-.kitten{
+/* Созвездия */
+.constellation{
   position:absolute;
-  width:50px;
-  height:50px;
+  width:2px;
+  height:2px;
+  background:#ffec8b;
   border-radius:50%;
-  z-index:5;
-}
-.kitten.blue{background:#7ec8ff; left:25%; top:10px; animation:blueKittenMove 6s infinite alternate ease-in-out;}
-.kitten.purple{background:#b14cff; left:60%; top:10px; animation:purpleKittenMove 8s infinite alternate ease-in-out;}
-
-@keyframes blueKittenMove{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-15px);}
-  100%{transform:translateY(0);}
-}
-@keyframes purpleKittenMove{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-12px);}
-  100%{transform:translateY(0);}
+  opacity:0.7;
+  animation:twinkle 3s infinite ease-in-out;
 }
 
-@media(max-width:400px){
-  .photo{height:220px;}
-  .kitten{width:40px;height:40px;}
-}
 </style>
 </head>
 <body>
@@ -141,15 +139,10 @@ body{
   </div>
 
   <p class="love-text">Я тебя люблю, Малышка 💜<br>Пусть каждый день будет волшебным и радостным 🌟</p>
-
-  <div class="kittens">
-    <div class="kitten blue"></div>
-    <div class="kitten purple"></div>
-  </div>
 </div>
 
 <script>
-// Звезды
+// Звёзды
 const starsLove=document.getElementById('starsLove');
 for(let i=0;i<80;i++){
   const s=document.createElement('div');
@@ -161,7 +154,22 @@ for(let i=0;i<80;i++){
   starsLove.appendChild(s);
 }
 
-// Фото меняются через 4 сек
+// Созвездия
+function createConstellation(container,coords){
+  coords.forEach(c=>{
+    const dot=document.createElement('div');
+    dot.className='constellation';
+    dot.style.top=c[1];
+    dot.style.left=c[0];
+    container.appendChild(dot);
+  });
+}
+const sagittarius=[[20+'%','10%'],[25+'%','15%'],[30+'%','20%']];
+const aquarius=[[70+'%','20%'],[75+'%','25%'],[80+'%','15%']];
+createConstellation(starsLove,sagittarius);
+createConstellation(starsLove,aquarius);
+
+// Фото сменяются
 const photos=document.querySelectorAll('.photo');
 let index=0;
 setInterval(()=>{
@@ -169,6 +177,18 @@ setInterval(()=>{
   photos[index].classList.add('active');
   index=(index+1)%photos.length;
 },4000);
+
+// Кометы
+for(let i=0;i<15;i++){
+  const c=document.createElement('div');
+  c.className='comet';
+  c.style.left=Math.random()*100+'%';
+  c.style.width=2+Math.random()*3+'px';
+  c.style.height=20+Math.random()*50+'px';
+  c.style.animationDuration=2+Math.random()*3+'s';
+  c.style.animationDelay=Math.random()*5+'s';
+  document.body.appendChild(c);
+}
 </script>
 </body>
 </html>

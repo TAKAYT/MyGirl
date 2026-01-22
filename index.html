@@ -147,15 +147,31 @@
       animation-delay: 1.2s;
     }
 
-    .love-content img {
+    .photo-layer {
+      position: relative;
       width: 85vw;
       max-width: 340px;
       height: 55vh;
       max-height: 460px;
+      margin-bottom: 20px;
+    }
+
+    .photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       border-radius: 30px;
       box-shadow: 0 0 40px rgba(177,76,255,0.6);
-      margin-bottom: 20px;
+      opacity: 0;
+      transform: scale(1.05);
+      transition: opacity 1.2s ease, transform 6s ease;
+    }
+
+    .photo.active {
+      opacity: 1;
+      transform: scale(1);
     }
 
     @keyframes bgFade {
@@ -215,7 +231,10 @@
     <div class="love" id="love">
       <div class="love-bg"></div>
       <div class="love-content">
-        <img src="hiro02_1.jpg" alt="02 и Хиро" />
+        <div class="photo-layer">
+          <img src="hiro02_1.jpg" alt="02 и Хиро" class="photo active" />
+          <img src="hiro02_2.jpg" alt="02 и Хиро" class="photo" />
+        </div>
         <p class="love-text">Я тебя люблю, Малышка 💜<br>У тебя всё получится.</p>
       </div>
     </div>
@@ -261,6 +280,14 @@
       love.style.display = 'block';
       document.body.style.overflow = 'hidden';
       document.querySelector('.heart').style.opacity = '0';
+
+      const photos = document.querySelectorAll('.photo');
+      let index = 0;
+      setInterval(() => {
+        photos[index].classList.remove('active');
+        index = (index + 1) % photos.length;
+        photos[index].classList.add('active');
+      }, 5000);
     }
   </script>
 </body>

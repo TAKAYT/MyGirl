@@ -15,13 +15,27 @@ body{
   position:relative;
 }
 
-/* Звёзды на фоне */
+/* Туман */
+.fog{
+  position:absolute;
+  inset:0;
+  background: radial-gradient(circle, rgba(138,43,226,0.2), rgba(18,0,24,0));
+  z-index:1;
+  animation:fogMove 60s linear infinite;
+}
+@keyframes fogMove{
+  0%{background-position:0 0;}
+  100%{background-position:100% 100%;}
+}
+
+/* Звёзды */
 .stars-love{
   position:absolute;
   width:100%;
   height:100%;
   overflow:hidden;
   pointer-events:none;
+  z-index:2;
 }
 .star{
   position:absolute;
@@ -47,6 +61,7 @@ body{
   animation-name:fall;
   animation-timing-function:linear;
   animation-iteration-count:infinite;
+  z-index:2;
 }
 @keyframes fall{
   0%{transform:translateY(-60px) rotate(10deg);}
@@ -55,6 +70,8 @@ body{
 
 /* Контент */
 .love-content{
+  position:relative;
+  z-index:3;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -82,6 +99,7 @@ body{
   max-width:320px;
   height:400px;
   margin-top:20px;
+  perspective: 1000px;
 }
 .photo{
   position:absolute;
@@ -91,11 +109,15 @@ body{
   height:100%;
   object-fit:cover;
   border-radius:20px;
-  box-shadow:0 0 25px rgba(177,76,255,0.5);
+  box-shadow:0 0 40px rgba(177,76,255,0.7);
   opacity:0;
-  transition:opacity 1s ease;
+  transform: scale(0.8) translateZ(-200px);
+  transition:opacity 1s ease, transform 1s ease;
 }
-.photo.active{opacity:1;}
+.photo.active{
+  opacity:1;
+  transform: scale(1) translateZ(0);
+}
 
 /* Текст */
 .love-text{
@@ -120,6 +142,7 @@ body{
 </style>
 </head>
 <body>
+<div class="fog"></div>
 <div class="stars-love" id="starsLove"></div>
 
 <div class="love-content">
@@ -169,12 +192,17 @@ const aquarius=[[70+'%','20%'],[75+'%','25%'],[80+'%','15%']];
 createConstellation(starsLove,sagittarius);
 createConstellation(starsLove,aquarius);
 
-// Фото сменяются
+// Фото меняются
 const photos=document.querySelectorAll('.photo');
 let index=0;
 setInterval(()=>{
-  photos.forEach(p=>p.classList.remove('active'));
+  photos.forEach((p,i)=>{
+    p.classList.remove('active');
+    // дальние фото уменьшаем и делаем прозрачными
+    if(i!==index) p.style.transform='scale(0.8) translateZ(-200px)';
+  });
   photos[index].classList.add('active');
+  photos[index].style.transform='scale(1) translateZ(0)';
   index=(index+1)%photos.length;
 },4000);
 

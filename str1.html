@@ -20,10 +20,11 @@ body{
   inset:0;
   background: radial-gradient(circle, rgba(138,43,226,0.2), rgba(18,0,24,0));
   z-index:1;
-  animation:fogMove 60s linear infinite;
+  animation:fogMove 80s linear infinite;
 }
 @keyframes fogMove{
   0%{background-position:0 0;}
+  50%{background-position:50% 50%;}
   100%{background-position:100% 100%;}
 }
 /* Звёзды */
@@ -37,10 +38,9 @@ body{
 }
 .star{
   position:absolute;
-  width:2px;
-  height:2px;
+  border-radius:50%;
   background:white;
-  opacity:0.5;
+  opacity:0.3;
   animation:twinkle 3s infinite ease-in-out;
 }
 @keyframes twinkle{
@@ -112,6 +112,20 @@ body{
   opacity:1;
   transform: scale(1) translateZ(0);
 }
+/* Магические блёстки */
+.sparkle{
+  position:absolute;
+  width:4px; height:4px;
+  background: rgba(255,255,255,0.7);
+  border-radius:50%;
+  pointer-events:none;
+  animation:blinking 2s infinite ease-in-out;
+  z-index:5;
+}
+@keyframes blinking{
+  0%,100%{opacity:0;}
+  50%{opacity:1;}
+}
 /* Текст */
 .love-text{
   margin-top:20px;
@@ -175,10 +189,11 @@ const starsLove=document.getElementById('starsLove');
 for(let i=0;i<80;i++){
   const s=document.createElement('div');
   s.className='star';
+  const size=Math.random()*2+1+'px';
+  s.style.width=size; s.style.height=size;
   s.style.top=Math.random()*100+'%';
   s.style.left=Math.random()*100+'%';
-  s.style.opacity=0.3+Math.random()*0.4;
-  s.style.animationDuration=2+Math.random()*2+'s';
+  s.style.animationDuration=(2+Math.random()*3)+'s';
   starsLove.appendChild(s);
 }
 
@@ -192,8 +207,8 @@ function createConstellation(container,coords){
     container.appendChild(dot);
   });
 }
-createConstellation(starsLove,[[20+'%','10%'],[25+'%','15%'],[30+'%','20%']]); // Стрелец
-createConstellation(starsLove,[[70+'%','20%'],[75+'%','25%'],[80+'%','15%']]); // Водолей
+createConstellation(starsLove,[[20+'%','10%'],[25+'%','15%'],[30+'%','20%']]);
+createConstellation(starsLove,[[70+'%','20%'],[75+'%','25%'],[80+'%','15%']]);
 
 // Фото меняются
 const photos=document.querySelectorAll('.photo');
@@ -205,6 +220,17 @@ setInterval(()=>{
   });
   photos[index].classList.add('active');
   photos[index].style.transform='scale(1) translateZ(0)';
+
+  // Добавляем блёстки вокруг активного фото
+  document.querySelectorAll('.sparkle').forEach(sp=>sp.remove());
+  for(let i=0;i<15;i++){
+    const sp=document.createElement('div');
+    sp.className='sparkle';
+    const x=Math.random()*320; const y=Math.random()*400;
+    sp.style.left=x+'px'; sp.style.top=y+'px';
+    document.getElementById('photoLayer').appendChild(sp);
+  }
+
   index=(index+1)%photos.length;
 },4000);
 

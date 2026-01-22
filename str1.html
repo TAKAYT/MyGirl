@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>С днём рождения, Малышка</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  min-height:100vh;
+  background: radial-gradient(circle at top,#3a1c5a,#120018);
+  font-family:'Arial',sans-serif;
+  overflow-x:hidden;
+  color:#fff;
+  position:relative;
+}
+
+.stars-love{
+  position:absolute;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  pointer-events:none;
+}
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:white;
+  opacity:0.5;
+  animation:twinkle 3s infinite ease-in-out;
+}
+@keyframes twinkle{
+  0%,100%{opacity:0.2;}
+  50%{opacity:1;}
+}
+
+.constellation{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:#ffec8b;
+  border-radius:50%;
+  opacity:0.7;
+  animation:twinkle 3s infinite ease-in-out;
+}
+
+.close-love{
+  position:absolute;
+  top:15px;
+  right:20px;
+  font-size:2em;
+  color:#fff;
+  cursor:pointer;
+  z-index:6;
+}
+
+.love-content{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:center;
+  min-height:100vh;
+  padding:20px 0;
+}
+
+.photo-layer{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:15px;
+  width:90%;
+  max-width:350px;
+  margin-top:10px;
+}
+.photo{
+  width:100%;
+  height:280px;
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow:0 0 25px rgba(177,76,255,0.5);
+  opacity:0;
+  transform:scale(1.05);
+  transition:opacity 1s ease, transform 6s ease;
+}
+.photo.active{opacity:1; transform:scale(1);}
+
+.love-text{
+  margin-top:15px;
+  font-size:1.2em;
+  line-height:1.5em;
+  color:#e6c8ff;
+  text-align:center;
+  max-width:90%;
+}
+
+.kittens{
+  position:relative;
+  width:100%;
+  height:180px;
+  margin-top:10px;
+  overflow:visible;
+}
+.kitten{
+  position:absolute;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  z-index:5;
+}
+.kitten.blue{background:#7ec8ff; left:20%; top:10px;}
+.kitten.purple{background:#b14cff; left:60%; top:10px;}
+
+@keyframes blueKittenMove{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-15px);}
+  100%{transform:translateY(0);}
+}
+@keyframes purpleKittenMove{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-12px);}
+  100%{transform:translateY(0);}
+}
+
+@media(max-width:400px){
+  .photo{height:220px;}
+  .kitten{width:40px;height:40px;}
+}
+</style>
+</head>
+<body>
+<div class="stars-love" id="starsLove"></div>
+
+<div class="love-content">
+  <div class="close-love" onclick="window.location.href='index.html'">×</div>
+  <div class="photo-layer" id="photoLayer">
+    <!-- 10 фото -->
+    <img src="hiro02_1.jpg" class="photo active">
+    <img src="hiro02_2.jpg" class="photo">
+    <img src="hiro02_3.jpg" class="photo">
+    <img src="hiro02_4.jpg" class="photo">
+    <img src="hiro02_5.jpg" class="photo">
+    <img src="hiro02_6.jpg" class="photo">
+    <img src="hiro02_7.jpg" class="photo">
+    <img src="hiro02_8.jpg" class="photo">
+    <img src="hiro02_9.jpg" class="photo">
+    <img src="hiro02_10.jpg" class="photo">
+  </div>
+  <p class="love-text">Я тебя люблю, Малышка 💜<br>Пусть каждый день будет волшебным и радостным 🌟</p>
+  <div class="kittens">
+    <div class="kitten blue"></div>
+    <div class="kitten purple"></div>
+  </div>
+</div>
+
+<script>
+// Звезды
+const starsLove=document.getElementById('starsLove');
+for(let i=0;i<80;i++){
+  const s=document.createElement('div');
+  s.className='star';
+  s.style.top=Math.random()*100+'%';
+  s.style.left=Math.random()*100+'%';
+  s.style.opacity=0.3+Math.random()*0.4;
+  s.style.animationDuration=2+Math.random()*2+'s';
+  starsLove.appendChild(s);
+}
+
+// Смена фото
+const photos=document.querySelectorAll('.photo');
+let index=0;
+setInterval(()=>{
+  photos.forEach(p=>p.classList.remove('active'));
+  photos[index].classList.add('active');
+  index=(index+1)%photos.length;
+},4000);
+
+// Котята анимация
+const blue=document.querySelector('.kitten.blue');
+const purple=document.querySelector('.kitten.purple');
+blue.style.animation='blueKittenMove 6s infinite alternate ease-in-out';
+purple.style.animation='purpleKittenMove 8s infinite alternate ease-in-out';
+
+// Созвездия
+function createConstellation(container,coords){
+  coords.forEach(c=>{
+    const dot=document.createElement('div');
+    dot.className='constellation';
+    dot.style.top=c[1];
+    dot.style.left=c[0];
+    container.appendChild(dot);
+  });
+}
+const sagittarius=[[20+'%','10%'],[25+'%','15%'],[30+'%','20%']];
+const aquarius=[[70+'%','20%'],[75+'%','25%'],[80+'%','15%']];
+createConstellation(starsLove,sagittarius);
+createConstellation(starsLove,aquarius);
+</script>
+</body>
+</html>

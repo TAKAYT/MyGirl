@@ -118,8 +118,28 @@
 
     .love {
       display: none;
-      margin-top: 25px;
-      animation: fadeIn 1.5s ease forwards;
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      background: rgba(18,0,24,0.85);
+      backdrop-filter: blur(6px);
+      animation: fadeIn 1.2s ease forwards;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .love img {
+      width: 80vw;
+      max-width: 320px;
+      height: 45vh;
+      max-height: 420px;
+      object-fit: cover;
+      border-radius: 25px;
+      margin: 10px 0;
+      box-shadow: 0 0 30px rgba(177,76,255,0.6);
     }
 
     .love img {
@@ -198,7 +218,9 @@
     setInterval(updateTimer, 60000);
 
     function showLove() {
-      document.getElementById('love').style.display = 'block';
+      const love = document.getElementById('love');
+      love.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     }
   </script>
 </body>

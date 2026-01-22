@@ -14,7 +14,6 @@ body{
   overflow:hidden;
   position:relative;
 }
-
 /* Туман */
 .fog{
   position:absolute;
@@ -27,7 +26,6 @@ body{
   0%{background-position:0 0;}
   100%{background-position:100% 100%;}
 }
-
 /* Звёзды */
 .stars{
   position:absolute;
@@ -49,7 +47,6 @@ body{
   0%,100%{opacity:0.2;}
   50%{opacity:1;}
 }
-
 /* Контейнер */
 .container{
   position:relative;
@@ -62,7 +59,6 @@ body{
   text-align:center;
   padding:20px;
 }
-
 /* Сердце */
 .heart{
   width:120px;
@@ -87,10 +83,8 @@ body{
   0%,100%{transform:rotate(-45deg) scale(1);}
   50%{transform:rotate(-45deg) scale(1.1);}
 }
-
 h1{font-size:2em;margin-bottom:12px;}
 p{font-size:1em;max-width:90%;margin-bottom:20px;line-height:1.6;}
-
 .love-btn{
   margin-top:15px;
   padding:12px 25px;
@@ -101,6 +95,14 @@ p{font-size:1em;max-width:90%;margin-bottom:20px;line-height:1.6;}
   color:white;
   cursor:pointer;
   box-shadow:0 0 15px rgba(177,76,255,0.6);
+}
+/* Кнопка звука */
+#soundBtn{
+  position:fixed;
+  bottom:20px; right:20px;
+  padding:10px 15px; border-radius:25px;
+  border:none; background:rgba(177,76,255,0.5);
+  color:#fff; cursor:pointer; z-index:10;
 }
 </style>
 </head>
@@ -115,8 +117,8 @@ p{font-size:1em;max-width:90%;margin-bottom:20px;line-height:1.6;}
   <button class="love-btn" onclick="window.location.href='str1.html'">Нажми сюда 💜</button>
 </div>
 
-<!-- Музыка -->
-<audio id="bgMusic" autoplay loop>
+<button id="soundBtn">🔊</button>
+<audio id="bgMusic" loop>
   <source src="romantic.mp3" type="audio/mpeg">
   Ваш браузер не поддерживает аудио.
 </audio>
@@ -132,10 +134,23 @@ for(let i=0;i<100;i++){
   stars.appendChild(s);
 }
 
-// Автозапуск музыки
+// Музыка
 const music=document.getElementById('bgMusic');
-music.volume=0.2;
-music.play().catch(()=>console.log("Автозапуск может быть заблокирован"));
+const btn=document.getElementById('soundBtn');
+let playing=false;
+
+function playMusicOnce(){
+  if(!playing){
+    music.volume=0.2;
+    music.play().catch(()=>console.log("Автозапуск заблокирован"));
+    playing=true;
+  }
+}
+document.body.addEventListener('click', playMusicOnce);
+btn.addEventListener('click', ()=>{
+  if(music.paused){music.play(); btn.textContent='🔊';}
+  else {music.pause(); btn.textContent='🔇';}
+});
 </script>
 </body>
 </html>

@@ -18,12 +18,13 @@ body{
 .fog{
   position:absolute;
   inset:0;
-  background: radial-gradient(circle, rgba(138,43,226,0.1), rgba(18,0,24,0));
+  background: radial-gradient(circle, rgba(138,43,226,0.15), rgba(18,0,24,0));
   z-index:1;
-  animation:fogMove 60s linear infinite;
+  animation:fogMove 80s linear infinite;
 }
 @keyframes fogMove{
   0%{background-position:0 0;}
+  50%{background-position:50% 50%;}
   100%{background-position:100% 100%;}
 }
 /* Звёзды */
@@ -37,10 +38,9 @@ body{
 }
 .star{
   position:absolute;
-  width:2px;
-  height:2px;
+  border-radius:50%;
   background:white;
-  opacity:0.5;
+  opacity:0.3;
   animation:twinkle 3s infinite ease-in-out;
 }
 @keyframes twinkle{
@@ -124,13 +124,17 @@ p{font-size:1em;max-width:90%;margin-bottom:20px;line-height:1.6;}
 </audio>
 
 <script>
-// Звёзды
+// Звёзды с разной скоростью и размером
 const stars=document.getElementById('stars');
 for(let i=0;i<100;i++){
   const s=document.createElement('div');
   s.className='star';
+  const size=Math.random()*2+1+'px';
+  s.style.width=size;
+  s.style.height=size;
   s.style.top=Math.random()*100+'%';
   s.style.left=Math.random()*100+'%';
+  s.style.animationDuration=(2+Math.random()*3)+'s';
   stars.appendChild(s);
 }
 
@@ -138,7 +142,6 @@ for(let i=0;i<100;i++){
 const music=document.getElementById('bgMusic');
 const btn=document.getElementById('soundBtn');
 let playing=false;
-
 function playMusicOnce(){
   if(!playing){
     music.volume=0.2;

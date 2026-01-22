@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>С днём рождения, Малышка</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
   min-height:100vh;
-  background: radial-gradient(circle at top, #3a1c5a, #120018);
+  background: radial-gradient(circle at top,#3a1c5a,#120018);
   font-family:'Arial',sans-serif;
   overflow-x:hidden;
   color:#fff;
@@ -16,14 +16,13 @@ body{
 }
 
 /* Звезды */
-.stars, .stars-love{
+.stars,.stars-love{
   position:absolute;
   width:100%;
   height:100%;
   overflow:hidden;
   pointer-events:none;
 }
-
 .star{
   position:absolute;
   width:2px;
@@ -32,12 +31,10 @@ body{
   opacity:0.5;
   animation:twinkle 3s infinite ease-in-out;
 }
-
 @keyframes twinkle{
   0%,100%{opacity:0.2;}
   50%{opacity:1;}
 }
-
 /* Созвездия */
 .constellation{
   position:absolute;
@@ -125,7 +122,7 @@ p{font-size:1em;max-width:90%;margin-bottom:20px;line-height:1.6;}
 .love-content{
   display:flex;
   flex-direction:column;
-  justify-content:center;
+  justify-content:flex-start;
   align-items:center;
   min-height:100vh;
   opacity:0;
@@ -144,13 +141,13 @@ p{font-size:1em;max-width:90%;margin-bottom:20px;line-height:1.6;}
   flex-direction:column;
   align-items:center;
   gap:15px;
-  margin-bottom:20px;
+  margin-top:10px;
   width:90%;
   max-width:350px;
 }
 .photo{
   width:100%;
-  height:280px; /* прямоугольник по высоте */
+  height:280px;
   object-fit:cover;
   border-radius:20px;
   box-shadow:0 0 25px rgba(177,76,255,0.5);
@@ -189,8 +186,8 @@ p{font-size:1em;max-width:90%;margin-bottom:20px;line-height:1.6;}
   object-fit:contain;
   z-index:5;
 }
-.kitten.blue{left:10%;}
-.kitten.purple{right:10%;}
+.kitten.blue{left:10%;top:10px;}
+.kitten.purple{right:10%;top:10px;}
 
 /* Движение котят */
 @keyframes blueKittenMove{
@@ -218,10 +215,8 @@ p{font-size:1em;max-width:90%;margin-bottom:20px;line-height:1.6;}
 </style>
 </head>
 <body>
-<!-- Звезды главный экран -->
 <div class="stars" id="stars"></div>
 
-<!-- Главный экран -->
 <div class="container">
   <div class="heart" id="mainHeart"></div>
   <h1>С днём рождения, Малышка 💜</h1>
@@ -229,19 +224,27 @@ p{font-size:1em;max-width:90%;margin-bottom:20px;line-height:1.6;}
   <button class="love-btn" onclick="showLove()">Нажми сюда 💜</button>
 </div>
 
-<!-- LOVE экран -->
 <div class="love" id="love">
   <div class="stars-love" id="starsLove"></div>
   <div class="close-love" onclick="closeLove()">×</div>
   <div class="love-content">
-    <div class="photo-layer">
-      <img src="hiro02_1.jpg" alt="02 и Хиро" class="photo active"/>
-      <img src="hiro02_2.jpg" alt="02 и Хиро" class="photo"/>
+    <div class="photo-layer" id="photoLayer">
+      <!-- 10 фото -->
+      <img src="hiro02_1.jpg" class="photo active">
+      <img src="hiro02_2.jpg" class="photo">
+      <img src="hiro02_3.jpg" class="photo">
+      <img src="hiro02_4.jpg" class="photo">
+      <img src="hiro02_5.jpg" class="photo">
+      <img src="hiro02_6.jpg" class="photo">
+      <img src="hiro02_7.jpg" class="photo">
+      <img src="hiro02_8.jpg" class="photo">
+      <img src="hiro02_9.jpg" class="photo">
+      <img src="hiro02_10.jpg" class="photo">
     </div>
     <p class="love-text">Я тебя люблю, Малышка 💜<br>Пусть каждый день будет волшебным и радостным 🌟</p>
     <div class="kittens">
-      <img src="blue_kitten.png" alt="Голубой котёнок" class="kitten blue"/>
-      <img src="purple_kitten.png" alt="Фиолетовый котёнок" class="kitten purple"/>
+      <img src="blue_kitten.png" class="kitten blue">
+      <img src="purple_kitten.png" class="kitten purple">
     </div>
   </div>
 </div>
@@ -288,6 +291,7 @@ createConstellation(starsLove,sagittarius);
 createConstellation(starsLove, aquarius);
 
 // LOVE экран
+let photoInterval;
 function showLove(){
   document.getElementById('love').style.display='block';
   document.body.style.overflow='hidden';
@@ -296,11 +300,12 @@ function showLove(){
   // смена фото
   const photos=document.querySelectorAll('.photo');
   let index=0;
-  setInterval(()=>{
+  clearInterval(photoInterval);
+  photoInterval=setInterval(()=>{
     photos.forEach(p=>p.classList.remove('active'));
     photos[index].classList.add('active');
     index=(index+1)%photos.length;
-  },5000);
+  },4000);
 
   // котята анимация
   const blue=document.querySelector('.kitten.blue');
@@ -313,6 +318,23 @@ function closeLove(){
   document.getElementById('love').style.display='none';
   document.body.style.overflow='auto';
   document.getElementById('mainHeart').style.opacity='1';
+  // котята на главном экране (под сердце)
+  const container=document.querySelector('.container');
+  if(!document.querySelector('.container .kittens')){
+    const kittens=document.createElement('div');
+    kittens.className='kittens';
+    const blue=document.createElement('img');
+    blue.src='blue_kitten.png';
+    blue.className='kitten blue';
+    const purple=document.createElement('img');
+    purple.src='purple_kitten.png';
+    purple.className='kitten purple';
+    kittens.appendChild(blue);
+    kittens.appendChild(purple);
+    container.appendChild(kittens);
+    blue.style.animation='blueKittenMove 6s infinite alternate ease-in-out';
+    purple.style.animation='purpleKittenMove 8s infinite alternate ease-in-out';
+  }
 }
 </script>
 </body>

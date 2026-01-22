@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>С днём рождения, Малышка</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      height: 100vh;
+      background: radial-gradient(circle at top, #3a1c5a, #120018);
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      opacity: 0.8;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .heart {
+      width: 120px;
+      height: 120px;
+      background: #b14cff;
+      position: relative;
+      transform: rotate(-45deg);
+      animation: beat 1.5s infinite;
+      margin-bottom: 30px;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      width: 120px;
+      height: 120px;
+      background: #b14cff;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart::before {
+      top: -60px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 60px;
+      top: 0;
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: rotate(-45deg) scale(1); }
+      50% { transform: rotate(-45deg) scale(1.1); }
+    }
+
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 1.1em;
+      max-width: 500px;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .timer {
+      font-size: 1.2em;
+      background: rgba(255,255,255,0.1);
+      padding: 12px 20px;
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+    }
+
+    .love-btn {
+      margin-top: 25px;
+      padding: 12px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #b14cff, #7a2cff);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(177,76,255,0.6);
+    }
+
+    .love {
+      display: none;
+      margin-top: 25px;
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    .love img {
+      width: 140px;
+      border-radius: 15px;
+      margin: 8px;
+      box-shadow: 0 0 20px rgba(177,76,255,0.5);
+    }
+
+    .love-text {
+      margin-top: 15px;
+      font-size: 1.2em;
+      color: #e6c8ff;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <div class="container">
+    <div class="heart"></div>
+    <h1>С днём рождения, Малышка 💜</h1>
+    <p>
+      Сегодня тебе 18, и этот день — особенный.
+      Пусть твои мечты сбываются так же красиво,
+      как светят звёзды этой ночью.
+      Я рядом и всегда буду.
+    </p>
+    <div class="timer" id="timer"></div>
+    <button class="love-btn" onclick="showLove()">Нажми сюда 💜</button>
+    <div class="love" id="love">
+      <img src="hiro02_1.jpg" alt="02 и Хиро" />
+      <img src="hiro02_2.jpg" alt="02 и Хиро" />
+      <p class="love-text">Я тебя люблю, Малышка 💜<br>У тебя всё получится.</p>
+    </div>
+  </div>
+
+  <script>
+    // звезды
+    const stars = document.getElementById('stars');
+    for (let i = 0; i < 120; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      stars.appendChild(star);
+    }
+
+    // таймер до дня рождения (22 января)
+    const timer = document.getElementById('timer');
+    const birthday = new Date(new Date().getFullYear(), 0, 22);
+
+    function updateTimer() {
+      const now = new Date();
+      let diff = birthday - now;
+
+      if (diff < 0) {
+        timer.innerHTML = 'С днём рождения, Малышка 🎉';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+      timer.innerHTML = `До твоего дня осталось: <br>${days} дн. ${hours} ч. ${minutes} мин.`;
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 60000);
+
+    function showLove() {
+      document.getElementById('love').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

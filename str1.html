@@ -10,11 +10,12 @@ body{
   min-height:100vh;
   background: radial-gradient(circle at top,#3a1c5a,#120018);
   font-family:'Arial',sans-serif;
-  overflow-x:hidden;
   color:#fff;
+  overflow-x:hidden;
   position:relative;
 }
 
+/* Звезды */
 .stars-love{
   position:absolute;
   width:100%;
@@ -35,16 +36,18 @@ body{
   50%{opacity:1;}
 }
 
-.constellation{
-  position:absolute;
-  width:2px;
-  height:2px;
-  background:#ffec8b;
-  border-radius:50%;
-  opacity:0.7;
-  animation:twinkle 3s infinite ease-in-out;
+/* Контент */
+.love-content{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
+  text-align:center;
 }
 
+/* Крестик */
 .close-love{
   position:absolute;
   top:15px;
@@ -55,15 +58,7 @@ body{
   z-index:6;
 }
 
-.love-content{
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-  align-items:center;
-  min-height:100vh;
-  padding:20px 0;
-}
-
+/* Фото */
 .photo-layer{
   display:flex;
   flex-direction:column;
@@ -80,26 +75,24 @@ body{
   border-radius:20px;
   box-shadow:0 0 25px rgba(177,76,255,0.5);
   opacity:0;
-  transform:scale(1.05);
-  transition:opacity 1s ease, transform 6s ease;
+  transition:opacity 1s ease;
 }
-.photo.active{opacity:1; transform:scale(1);}
+.photo.active{opacity:1;}
 
+/* Текст */
 .love-text{
-  margin-top:15px;
+  margin-top:20px;
   font-size:1.2em;
   line-height:1.5em;
   color:#e6c8ff;
-  text-align:center;
-  max-width:90%;
 }
 
+/* Котята */
 .kittens{
   position:relative;
   width:100%;
-  height:180px;
-  margin-top:10px;
-  overflow:visible;
+  height:80px;
+  margin-top:20px;
 }
 .kitten{
   position:absolute;
@@ -108,8 +101,8 @@ body{
   border-radius:50%;
   z-index:5;
 }
-.kitten.blue{background:#7ec8ff; left:20%; top:10px;}
-.kitten.purple{background:#b14cff; left:60%; top:10px;}
+.kitten.blue{background:#7ec8ff; left:25%; top:10px; animation:blueKittenMove 6s infinite alternate ease-in-out;}
+.kitten.purple{background:#b14cff; left:60%; top:10px; animation:purpleKittenMove 8s infinite alternate ease-in-out;}
 
 @keyframes blueKittenMove{
   0%{transform:translateY(0);}
@@ -133,8 +126,8 @@ body{
 
 <div class="love-content">
   <div class="close-love" onclick="window.location.href='index.html'">×</div>
+  
   <div class="photo-layer" id="photoLayer">
-    <!-- 10 фото -->
     <img src="hiro02_1.jpg" class="photo active">
     <img src="hiro02_2.jpg" class="photo">
     <img src="hiro02_3.jpg" class="photo">
@@ -146,7 +139,9 @@ body{
     <img src="hiro02_9.jpg" class="photo">
     <img src="hiro02_10.jpg" class="photo">
   </div>
+
   <p class="love-text">Я тебя люблю, Малышка 💜<br>Пусть каждый день будет волшебным и радостным 🌟</p>
+
   <div class="kittens">
     <div class="kitten blue"></div>
     <div class="kitten purple"></div>
@@ -166,7 +161,7 @@ for(let i=0;i<80;i++){
   starsLove.appendChild(s);
 }
 
-// Смена фото
+// Фото меняются через 4 сек
 const photos=document.querySelectorAll('.photo');
 let index=0;
 setInterval(()=>{
@@ -174,27 +169,6 @@ setInterval(()=>{
   photos[index].classList.add('active');
   index=(index+1)%photos.length;
 },4000);
-
-// Котята анимация
-const blue=document.querySelector('.kitten.blue');
-const purple=document.querySelector('.kitten.purple');
-blue.style.animation='blueKittenMove 6s infinite alternate ease-in-out';
-purple.style.animation='purpleKittenMove 8s infinite alternate ease-in-out';
-
-// Созвездия
-function createConstellation(container,coords){
-  coords.forEach(c=>{
-    const dot=document.createElement('div');
-    dot.className='constellation';
-    dot.style.top=c[1];
-    dot.style.left=c[0];
-    container.appendChild(dot);
-  });
-}
-const sagittarius=[[20+'%','10%'],[25+'%','15%'],[30+'%','20%']];
-const aquarius=[[70+'%','20%'],[75+'%','25%'],[80+'%','15%']];
-createConstellation(starsLove,sagittarius);
-createConstellation(starsLove,aquarius);
 </script>
 </body>
 </html>
